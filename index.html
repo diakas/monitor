@@ -46,6 +46,7 @@
     </section>
 
     <script>
+	var seedPeer='95.216.137.85';
       window.chartdata=[];
       window.chartlabels=[];
       window.syncdata=[];
@@ -69,7 +70,7 @@
 
       function checkPeers(){
         window.syncdata=[];
-        $.getJSON("http://127.0.0.1:6100/api/peers?callback=a").success(function(data){
+        $.getJSON("http://"+seedPeer+":6100/api/peers?callback=a").success(function(data){
           data.peers.forEach(function(peer){
             if(peer.port>79){
               $.getJSON("http://"+peer.ip+":"+peer.port+"/api/blocks/getheight?callback=a").success(function(data2){
@@ -80,7 +81,7 @@
             }
           });
         });
-        $.getJSON("http://127.0.0.1:6100/api/blocks/getheight?callback=a").success(function(data2){
+        $.getJSON("http://"+seedPeer+":6100/api/blocks/getheight?callback=a").success(function(data2){
           data2.ip="<span class='text-danger'>Seed (127.0.0.1:6100)</span>";
           window.syncdata.push(data2);
         });
